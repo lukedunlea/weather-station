@@ -34,3 +34,9 @@ Edit `config/settings.py` to adjust:
 January 10, 2026
 ## Project Status
 Day 2: Git version control implementation
+pi@raspberrypi:~/weather_station $ git restore README.md
+## Contributing
+This project was developed as part of a software development internship.
+Contributions and suggestions are welcome!
+
+
