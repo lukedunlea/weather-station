@@ -41,4 +41,4 @@ pi@raspberrypi:~/weather_station $ git restore README.md
 This project was developed as part of a software development internship.
 Contributions and suggestions are welcome!
 
-#=====================================finish===============================#
+#====================================================================#
