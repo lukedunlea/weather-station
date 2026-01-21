@@ -1,3 +1,5 @@
+#=========================================================================#
+
 # Weather Station Dashboard
 A Raspberry Pi-based weather monitoring system with web interface.
 ## Project Overview
@@ -39,4 +41,4 @@ pi@raspberrypi:~/weather_station $ git restore README.md
 This project was developed as part of a software development internship.
 Contributions and suggestions are welcome!
 
-
+#=====================================finish===============================#
