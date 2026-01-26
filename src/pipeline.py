@@ -1,7 +1,12 @@
 """Data processing pipeline for weather station."""
 
-import random
 from datetime import datetime
+import logging
+import random
+from logger import setup_logger
+import utils as utils_module
+
+logger = setup_logger(__name__)
 
 def generate_mock_reading():
     """Generate simulated sensor data.
@@ -9,46 +14,63 @@ def generate_mock_reading():
     Returns:
         Dict with temperature, humidity, timestamp
     """
-    return {
-        "temperature": round(random.uniform(10, 35), 1),
-        "humidity": round(random.uniform(20, 80), 1),
-        "timestamp": datetime.now()
+
+    mockReading = {
+        "temperature": round(random.uniform(-100, 200), 1),
+        "humidity": round(random.uniform(-100, 200), 1),
+        "timestamp": datetime.now(),
+        "message": "these are your mock readings"
+
     }
 
-def process_reading(reading, threshold_checker, utils_module):
+    logger.info(f"The mock reading is : {mockReading} ")
+
+    return mockReading
+
+def process_reading(mockReading):
     """Process a sensor reading through the pipeline.
     
     Returns:
         Dict with processed data and alerts
     """
-    temp = reading["temperature"]
-    humidity = reading["humidity"]
-    timestamp = reading["timestamp"]
+
+    temp = mockReading["temperature"]
+    humidity = mockReading["humidity"]
+    timestamp = mockReading["timestamp"]
     
     # Validate
-    try:
-        utils_module.validate_temperature(temp)
-        utils_module.validate_humidity(humidity)
+    isTempValid = utils_module.validate_temperature(temp)
+    isHumValid = utils_module.validate_humidity(humidity)
+    if isTempValid and isHumValid:
         is_valid = True
-        error = None
-    except ValueError as e:
+        logger.info(f"The temp is inside the given threshold: {temp}")
+    else:
         is_valid = False
-        error = str(e)
+        logger.warning(f"The temp is outside the given threshold: {temp}")
+        logger.error(f"Your humidity has gone outside the given threshold{humidity}")
+        print("test")
     
-    # Check thresholds
-    alerts = []
-    if is_valid:
-        alerts = threshold_checker.check_all(temp, humidity)
     
     return {
-        "reading": reading,
+        "reading": mockReading,
         "is_valid": is_valid,
-        "error": error,
-        "alerts": alerts,
         "timestamp_formatted": utils_module.format_timestamp(timestamp)
     }
 
+def testRun():
+
+    for i in range (1,20):
+        print("Testing pipeline...")
+        mockReading = generate_mock_reading()
+        print(f"Mock: {mockReading['temperature']}°C, {mockReading['humidity']}%, {mockReading["message"]}")
+        pr = process_reading(mockReading)
+        print(f"{pr}")
+
 if __name__ == "__main__":
-    print("Testing pipeline...")
-    reading = generate_mock_reading()
-    print(f"Mock: {reading['temperature']}°C, {reading['humidity']}%")
+
+    for i in range (1,20):
+        print("Testing pipeline...")
+        mockReading = generate_mock_reading()
+        print(f"Mock: {mockReading['temperature']}°C, {mockReading['humidity']}%, {mockReading["message"]}")
+        pr = process_reading(mockReading)
+        print(f"{pr}")

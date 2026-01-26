@@ -5,7 +5,7 @@ import logging
 import random
 from logger import setup_logger
 
-logger = setup_logger("myApp", "utilsLog.log", logging.DEBUG)
+logger = setup_logger(__name__)
 
 def celsius_to_fahrenheit(celsius):
     """Convert Celsius to Fahrenheit."""
@@ -29,6 +29,7 @@ def validate_temperature(temp):
     if not -40 <= temp <= 80:
         logger.warning(f"The temperature is: {temp} this is out of range.")
         # raise ValueError(f"Temperature {temp} out of range")
+        return False
     return True
 
 def validate_humidity(humidity):
@@ -38,7 +39,23 @@ def validate_humidity(humidity):
     if not 0 <= humidity <= 100:
         logger.error(f"The humidity is: {humidity} this is out of range.")
         # raise ValueError(f"Humidity {humidity} must be 0-100")
+        return False
     return True
+
+def testRun():
+
+   
+
+    for i in range (1,20):
+        hum = random.randint(-5,105)
+        temp = random.randint(-50,100)
+            
+        print("Testing utils...")
+        print(f"{temp}°C = {celsius_to_fahrenheit(temp)}°F")
+        print(f"Time: {format_timestamp()}")
+        print(f"{validate_temperature(temp)}")
+        print(f"{validate_humidity(hum)}")
+
 
 if __name__ == "__main__":
 
