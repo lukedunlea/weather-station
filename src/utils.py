@@ -3,7 +3,7 @@
 from datetime import datetime
 import logging
 import random
-from logger import setup_logger
+from src.logger import setup_logger
 
 logger = setup_logger(__name__)
 

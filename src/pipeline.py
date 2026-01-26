@@ -3,8 +3,8 @@
 from datetime import datetime
 import logging
 import random
-from logger import setup_logger
-import utils as utils_module
+from src.logger import setup_logger
+import src.utils as utils_module
 
 logger = setup_logger(__name__)
 
