@@ -1,0 +1,128 @@
+<head>
+    <meta charset="UTF-8">
+    <!-- Allows special characters and symbols -->
+
+    <title>RGB LED Controller</title>
+    <!-- Title shown in the browser tab -->
+
+    <!-- Link the CSS file so the page has styling -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <!-- Header section at the top of the page -->
+    <header>
+        <h1>Raspberry Pi RGB LED Controller</h1>
+        <p>Control and monitor hardware from a web interface</p>
+    </header>
+
+    <!-- Main content of the page -->
+    <main>
+        <section class="content">
+
+            <h2>LED Controls</h2>
+
+            <!-- Button that turns the LED on -->
+            <!-- When clicked, it runs the JavaScript function turnOn() -->
+            <button onclick="turnOn()">Turn On</button>
+
+            <!-- Button that turns the LED off -->
+            <!-- When clicked, it runs the JavaScript function turnOff() -->
+            <button onclick="turnOff()">Turn Off</button>
+
+            <br><br>
+
+            <!-- Slider to control the red value -->
+            <label>Red</label><br>
+            <!-- The id "r" lets JavaScript read this value -->
+            <input type="range" id="r" min="0" max="100">
+
+            <br><br>
+
+            <!-- Slider to control the green value -->
+            <label>Green</label><br>
+            <!-- The id "g" lets JavaScript read this value -->
+            <input type="range" id="g" min="0" max="100">
+
+            <br><br>
+
+            <!-- Slider to control the blue value -->
+            <label>Blue</label><br>
+            <!-- The id "b" lets JavaScript read this value -->
+            <input type="range" id="b" min="0" max="100">
+
+            <br><br>
+
+            <!-- Button that sends the RGB values to the server -->
+            <button onclick="setColor()">Set Color</button>
+
+            <!-- This paragraph is used to show the current LED status -->
+            <p id="status">LED status: unknown</p>
+
+        </section>
+    </main>
+
+    <!-- JavaScript section -->
+    <!-- This code runs in the browser and talks to Flask -->
+    <script>
+
+        // This function runs when the "Turn On" button is clicked
+        function turnOn() {
+            // Send a POST request to the Flask route /led/on
+            fetch("/led/on", { method: "POST" })
+                // Convert the response from Flask into JSON
+                .then(res => res.json())
+                // Update the text on the page after the LED turns on
+                .then(() => {
+                    document.getElementById("status").innerText = "LED ON";
+                });
+        }
+
+        // This function runs when the "Turn Off" button is clicked
+        function turnOff() {
+            // Send a POST request to the Flask route /led/off
+            fetch("/led/off", { method: "POST" })
+                // Convert the response into JSON
+                .then(res => res.json())
+                // Update the status text on the page
+                .then(() => {
+                    document.getElementById("status").innerText = "LED OFF";
+                });
+        }
+
+        // This function runs when the "Set Color" button is clicked
+        function setColor() {
+            // Read the values from the sliders
+            const r = document.getElementById("r").value;
+            const g = document.getElementById("g").value;
+            const b = document.getElementById("b").value;
+
+            // Send the RGB values to the Flask server
+            fetch("/led/color", {
+                method: "POST",
+                // Tell Flask that we are sending JSON data
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                // Convert the RGB values into JSON format
+                body: JSON.stringify({ r, g, b })
+            })
+            // Convert Flask response into JSON
+            .then(res => res.json())
+            // Update the status text to show the selected color
+            .then(() => {
+                document.getElementById("status").innerText =
+                    `LED Color: R${r} G${g} B${b}`;
+            });
+        }
+
+    </script>
+
+    <!-- Footer at the bottom of the page -->
+    <footer>
+        <p>© 2026 RGB Controller</p>
+    </footer>
+
+</body>
+</html>

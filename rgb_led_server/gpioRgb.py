@@ -2,7 +2,7 @@ from gpiozero import RGBLED
 import random
 
 class Rgbled:
-    def __init__(self, red_pin, green_pin, blue_pin, anode=True):
+    def __init__(self, red_pin, green_pin, blue_pin, annode=True):
       
         #Initialize the RGB LED.
         #anode=True for common anode
@@ -10,7 +10,7 @@ class Rgbled:
             red=red_pin,
             green=green_pin,
             blue=blue_pin,
-            active_high=not anode)
+            active_high=not annode)
 
     def set_color(self, r_val, g_val, b_val):
         #"""Set LED color using values from 0–100"""
