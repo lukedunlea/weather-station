@@ -3,33 +3,38 @@ import random
 
 class Rgbled:
     def __init__(self, red_pin, green_pin, blue_pin, annode=True):
-      
-        #Initialize the RGB LED.
-        #anode=True for common anode
+        # Initialize the RGB LED
         self.led = RGBLED(
             red=red_pin,
             green=green_pin,
             blue=blue_pin,
-            active_high=not annode)
+            active_high=not annode
+        )
 
     def set_color(self, r_val, g_val, b_val):
-        #"""Set LED color using values from 0–100"""
-        self.led.red = r_val / 100
-        self.led.green = g_val / 100
-        self.led.blue = b_val / 100
+        """Set LED color using 0–255 values"""
+
+        # Clamp input values
+        r_val = max(0, min(255, r_val))
+        g_val = max(0, min(255, g_val))
+        b_val = max(0, min(255, b_val))
+
+        # Convert to gpiozero range (0.0–1.0)
+        self.led.red = r_val / 255.0
+        self.led.green = g_val / 255.0
+        self.led.blue = b_val / 255.0
 
     def random_color(self):
-        #"""Set the LED to a random color"""
-        r = random.randint(0, 100)
-        g = random.randint(0, 100)
-        b = random.randint(0, 100)
+        """Set the LED to a random color"""
+        r = random.randint(0, 255)
+        g = random.randint(0, 255)
+        b = random.randint(0, 255)
         self.set_color(r, g, b)
         print(f"Random color: R={r}, G={g}, B={b}")
 
     def turn_off(self):
-        #"""Turn off the LED and release GPIO"""
-        self.led.close()
-
+        """Turn LED off without releasing GPIO"""
+        self.led.off()
 
 
 
