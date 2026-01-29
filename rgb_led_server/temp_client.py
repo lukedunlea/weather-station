@@ -16,8 +16,9 @@ def get_temperature():
     return data["temperature"]
 
 def set_rgb_color(r, g, b):
-    payload = {"r": r, "g": g, "b":b}
+    payload = {"color": [int(r), int(g), int(b)]}
     requests.post(RGB_API_URL, json=payload, timeout=2)
+
 
 # -------- MAIN LOOP --------
 if __name__ == "__main__":

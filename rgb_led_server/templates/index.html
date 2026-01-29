@@ -40,29 +40,33 @@
             <!-- Set color button -->
             <button onclick="setColor()">Set Color</button>
 
-            <!-- Status display -->
+            <!-- LED Status -->
             <p id="status">LED status: unknown</p>
+
+            <hr>
+
+            <!-- Temperature from Luke's Pi -->
+            <h2>Temperature (Luke’s Pi)</h2>
+            <p id="luke-temp">-- °C</p>
 
         </section>
     </main>
 
     <!-- JavaScript -->
     <script>
+        const TEMP_API_URL = "http://192.168.68.72:5000/api/sensor";
 
-        // Toggle the LED on or off
+        // Toggle LED
         function toggleLED() {
             fetch("/api/toggle", { method: "POST" })
                 .then(res => res.json())
                 .then(data => {
-                    if (data.on) {
-                        document.getElementById("status").innerText = "LED ON";
-                    } else {
-                        document.getElementById("status").innerText = "LED OFF";
-                    }
+                    document.getElementById("status").innerText =
+                        data.on ? "LED ON" : "LED OFF";
                 });
         }
 
-        // Send RGB values to the server
+        // Set RGB color
         function setColor() {
             const r = document.getElementById("r").value;
             const g = document.getElementById("g").value;
@@ -70,9 +74,7 @@
 
             fetch("/api/color", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ r, g, b })
             })
             .then(res => res.json())
@@ -82,19 +84,42 @@
             });
         }
 
-        // Get LED status when page loads
-        window.onload = function () {
+        // Get LED status on load
+        function fetchLedStatus() {
             fetch("/api/status")
                 .then(res => res.json())
                 .then(data => {
-                    if (data.on) {
-                        document.getElementById("status").innerText = "LED ON";
-                    } else {
-                        document.getElementById("status").innerText = "LED OFF";
-                    }
+                    document.getElementById("status").innerText =
+                        data.on ? "LED ON" : "LED OFF";
                 });
-        };
+        }
 
+        // Fetch Luke’s temperature
+       async function fetchLukeTemperature() {
+        
+    try {
+        const response = await fetch(TEMP_API_URL);
+
+        if (!response.ok) 
+        {throw new Error("Network response was not ok");}
+
+        const data = await response.json();
+        document.getElementById("luke-temp").innerText =data.temperature + " °C";} 
+        
+        catch (error) {
+        console.error("Failed to fetch Luke's temperature:", error);
+        document.getElementById("luke-temp").innerText = "Unavailable";
+    }
+}
+
+        
+
+        // Run on page load
+        window.onload = function () {
+            fetchLedStatus();
+            fetchLukeTemperature();
+            setInterval(fetchLukeTemperature, 1000);
+        };
     </script>
 
     <!-- Footer -->
@@ -104,4 +129,3 @@
 
 </body>
 </html>
-
