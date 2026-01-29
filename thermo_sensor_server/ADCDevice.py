@@ -1,10 +1,11 @@
-import smbus  # Allows the Raspberry Pi to communicate using I2C
+from smbus2 import SMBus
+  # Allows the Raspberry Pi to communicate using I2C
 
 class ADCDevice(object):
     def __init__(self):
         self.cmd = 0          # Command used by the ADC
         self.address = 0      # I2C address of the device
-        self.bus = smbus.SMBus(1)  # Opens I2C bus 1 on the Pi
+        self.bus = SMBus(1)  # Opens I2C bus 1 on the Pi
 
     def detectI2C(self, addr):
         # Checks if a device exists at this I2C address

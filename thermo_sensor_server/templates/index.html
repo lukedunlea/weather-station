@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Weather Station Dashboard</title>
+
+    <!-- Google Font for a modern dashboard look -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- Link to the CSS file served by Flask -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<header>
+    <h1>Weather Station Dashboard</h1>
+    <p>Live environmental monitoring using a Raspberry Pi</p>
+</header>
+
+<main>
+    <div class="sensor-card">
+        <h2>Current Temperature</h2>
+        <p id="temperature">-- °C</p>
+        <small id="timestamp">Waiting for data...</small>
+    </div>
+
+
+<script>
+    async function fetchSensorData() {
+        try {
+            const response = await fetch("/api/sensor");
+            const data = await response.json();
+
+const tempElement = document.getElementById("temperature");
+            const timeElement = document.getElementById("timestamp");
+            const temp = data.temperature;
+
+            // Update text
+            tempElement.textContent = temp + " °C";
+            timeElement.textContent = "Last updated: " + data.time;
+
+            // Remove existing colour classes
+            tempElement.classList.remove("temp-cold", "temp-normal", "temp-hot");
+
+            // Apply colour based on temperature range
+            if (temp < 20) {
+                tempElement.classList.add("temp-cold");
+            } else if (temp <= 28) {
+                tempElement.classList.add("temp-normal");
+            } else {
+                tempElement.classList.add("temp-hot");
+            }
+
+        } catch (error) {
+            console.error("Failed to fetch sensor data:", error);
+        }
+    }
+
+    // Load once, then update every second
+    fetchSensorData();
+    setInterval(fetchSensorData, 1000);
+</script>
+</main>
+
+<footer>
+    <p>Flask web server running on Raspberry Pi</p>
+</footer>
+
+</body>
+</html>

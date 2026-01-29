@@ -1,0 +1,80 @@
+/* ===============================
+   Global Page Styling
+   =============================== */
+
+body {
+    font-family: 'Montserrat', Arial, sans-serif;
+    margin: 0;
+    background-color: #eef2f5; /* light, clean background */
+    color: #333;
+}
+
+/* ===============================
+   Header Section
+   =============================== */
+
+header {
+    background-color: #1e3a5f; /* weather/tech blue */
+    color: white;
+    padding: 25px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.1em;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+header p {
+    margin-top: 8px;
+    font-size: 1em;
+    opacity: 0.9;
+}
+
+/* ===============================
+   Main Content Area
+   =============================== */
+
+main {
+    padding: 30px;
+    max-width: 900px;
+    margin: auto;
+}
+
+/* Sensor data / content card */
+main p {
+    background-color: white;
+    border-left: 6px solid #4aa3df; /* temperature accent */
+    padding: 22px;
+    font-size: 1.1em;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+}
+
+.temp-cold {
+    color: #1e90ff; /* blue */
+}
+
+.temp-normal {
+    color: #2ecc71; /* green */
+}
+
+.temp-hot {
+    color: #e74c3c; /* red */
+}
+/* ===============================
+   Footer Section
+   =============================== */
+
+footer {
+    background-color: #dfe6ec;
+    text-align: center;
+    padding: 12px;
+    font-size: 0.9em;
+    color: #555;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
