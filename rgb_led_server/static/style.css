@@ -1,54 +1,108 @@
+/* ===== Base Page Styling ===== */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f2f2f2;
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    background-color: #f4f6f8;
     margin: 0;
     color: #333;
 }
 
-/* Header */
+/* ===== Header ===== */
 header {
-    background-color: #222;
+    background: linear-gradient(135deg, #222, #444);
     color: white;
     text-align: center;
-    padding: 20px;
+    padding: 25px 15px;
 }
 
-h1 {
-    font-family: "Courier New", Courier, monospace;
+header h1 {
+    margin: 0;
+    font-size: 28px;
+}
+
+header p {
+    margin-top: 8px;
+    font-size: 14px;
+    opacity: 0.9;
 }
 
 
-/* Main content */
+
+/* ===== Main Layout ===== */
 main {
-    padding: 20px;
+    display: flex;
+    justify-content: center;
+    padding: 30px 15px;
 }
 
+/* ===== Content Card ===== */
 .content {
+    background-color: white;
+    padding: 25px 30px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
     text-align: center;
 }
 
+.content h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+}
 
+/* ===== Buttons ===== */
 button {
-    padding: 10px 15px;
+    background-color: #007bff;
+    border: none;
+    color: white;
+    padding: 10px 18px;
     margin: 5px;
     font-size: 14px;
+    border-radius: 6px;
     cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
 button:hover {
-    background-color: #ddd;
+    background-color: #0056b3;
+    transform: translateY(-1px);
 }
 
-
-.content {
-    background-color: white;
-    padding: 20px;
-    border-radius: 5px;
+button:active {
+    transform: translateY(0);
 }
 
-/* Footer */
+/* ===== Sliders ===== */
+label {
+    font-weight: 500;
+}
+
+input[type="range"] {
+    width: 100%;
+    margin: 8px 0 18px 0;
+}
+
+/* ===== Status Text ===== */
+#status {
+    margin-top: 15px;
+    padding: 10px;
+    background-color: #f1f3f5;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+/* ===== Temperature Section ===== */
+h2 + p {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+/* ===== Footer ===== */
 footer {
     text-align: center;
-    padding: 10px;
-    background-color: #ddd;
+    padding: 12px;
+    font-size: 12px;
+    background-color: #e0e0e0;
+    color: #555;
 }
+
