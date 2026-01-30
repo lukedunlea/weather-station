@@ -35,5 +35,4 @@ config/*.json
 
 .env
 
-#Folders
-day_1-5/
+
